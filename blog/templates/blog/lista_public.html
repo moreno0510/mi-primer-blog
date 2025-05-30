@@ -1,7 +1,14 @@
- <html>
+{% load static %}
+<!DOCTYPE html>
+<html>
 <head>
-	<title>Blog del profe Jorge</title>
-	<style>
+    <meta charset="UTF-8">
+    <title>Blog de moreno</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/blog.css' %}">
+    <style>
         .filtro-usuarios {
             margin: 15px 0;
             padding: 10px;
@@ -13,6 +20,7 @@
             padding: 5px 10px;
             background: #e0e0e0;
             border-radius: 3px;
+            text-decoration: none;
         }
         .usuario-filtro.activo {
             background: #4CAF50;
@@ -22,41 +30,64 @@
             display: inline-block;
             margin-left: 10px;
             color: #666;
+            text-decoration: none;
+        }
+        .post {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-	<div style="background: red;">
-    	<h1><a href="/">Blog del profe Jorge</a></h1>
-    </div>
-	<!-- Filtro por usuario usando enlaces -->
-	<div class="filtro-usuarios">
-	<strong>Filtrar por autor:</strong>
-	
-	<!-- Opción "Todos" -->
-	<a href="?" class="usuario-filtro {% if not usuario_activo %}activo{% endif %}">
-		Todos
-	</a>
-	
-	<!-- Opciones por usuario -->
-	{% for usuario in usuarios %}
-		<a href="?usuario={{ usuario.id }}" 
-		   class="usuario-filtro {% if usuario_activo == usuario.id %}activo{% endif %}">
-			{{ usuario.username }}
-		</a>
-	{% endfor %}
-   </div>
+    <header class="page-header">
+        <h1><a href="/">Blog de moreno</a></h1>
+    </header>
 
-   <!-- Lista de publicaciones -->
+    <!-- Filtro por usuario -->
+    <div class="filtro-usuarios">
+        <strong>Filtrar por autor:</strong>
 
-   <div>
-	{% for publicacion in publicaciones %} 
-	<p>Publicado: {{ publicacion.fecha_publicacion }} por autor/a: {{ publicacion.autor.username }} </p>
-	<h2> <a href=""> {{publicacion.titulo}} </a> </h2>
-	<p> {{ publicacion.texto|linebreaksbr }} </p>
-	<hr>	
-	{% endfor %}
-   </div>
+        <!-- Opción "Todos" -->
+        <a href="?" class="usuario-filtro {% if not usuario_activo %}activo{% endif %}">
+            Todos
+        </a>
+
+        <!-- Opciones por usuario -->
+        {% for usuario in usuarios %}
+            <a href="?usuario={{ usuario.id }}"
+               class="usuario-filtro {% if usuario_activo == usuario.id %}activo{% endif %}">
+                {{ usuario.username }}
+            </a>
+        {% endfor %}
+
+        <!-- Enlace para limpiar filtro -->
+        <a href="?" class="limpiar-filtro">Limpiar filtro</a>
+    </div>
+
+    <!-- Lista de publicaciones -->
+    <main class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                {% for publicacion in publicaciones %}
+                    <article class="post">
+                        <div class="date">
+                            <p>Publicado: {{ publicacion.fecha_publicacion }}</p>
+                        </div>
+                        <h2>
+                            <a href="/publicacion/{{ publicacion.id }}/">
+                                {{ publicacion.titulo }}
+                            </a>
+                        </h2>
+                        <p>{{ publicacion.texto|default:"(Sin contenido)"|linebreaksbr }}</p>
+                        <hr>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
 </body>
 </html>
 
