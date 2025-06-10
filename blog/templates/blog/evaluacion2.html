@@ -1,0 +1,7 @@
+<h1>Lista de Libros</h1>
+<img src="https://via.placeholder.com/150" alt="Libros">
+<ul>
+  {% for libro in libros %}
+    <li>{{ libro.titulo }} - {{ libro.autor }} ({{ libro.fecha_publicacion }})</li>
+  {% endfor %}
+</ul>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Publicacion
+from .models import Libro
 from django.contrib.auth.models import User
 # Create your views here.
 def lista_public(request):
@@ -18,3 +19,6 @@ def lista_public(request):
 		'usuarios':usuarios,
 		'usuario_activo':usuario_activo
 	})
+def evaluacion2(request):
+    libros = Libro.objects.all()
+    return render(request, 'blog/evaluacion2.html', {'libros': libros})
