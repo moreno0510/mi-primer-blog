@@ -1,7 +1,94 @@
-<h1>Lista de Libros</h1>
-<img src="https://via.placeholder.com/150" alt="Libros">
-<ul>
-  {% for libro in libros %}
-    <li>{{ libro.titulo }} - {{ libro.autor }} ({{ libro.fecha_publicacion }})</li>
-  {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog de Libros</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4b0082;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .libro {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .portada {
+            width: 200px;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .detalle {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .detalle h2 {
+            margin-top: 0;
+            color: #4b0082;
+        }
+
+        .detalle p {
+            margin: 5px 0;
+        }
+
+        .categoria {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .fecha {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .sinopsis {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Blog de Libros</h1>
+    </header>
+
+    <div class="contenedor">
+        {% for libro in libros %}
+        <div class="libro">
+            <img src="{{ libro.portada }}" alt="Portada de {{ libro.titulo }}" class="portada">
+            <div class="detalle">
+                <h2>{{ libro.titulo }}</h2>
+                <p><strong>Autor:</strong> {{ libro.autor }}</p>
+                <p class="fecha"><strong>Publicado:</strong> {{ libro.fecha_publicacion }}</p>
+                <p class="categoria">Categoría: {{ libro.categoria }}</p>
+                <p class="sinopsis">{{ libro.sinopsis }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No hay libros disponibles.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
